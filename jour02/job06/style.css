@@ -1,0 +1,14 @@
+body.konami-active {
+  background-color: #2c3e50; /* Bleu foncé */
+  color: #ecf0f1; /* Blanc cassé */
+  font-family: "Segoe UI", sans-serif;
+  transition: all 0.5s ease;
+}
+
+body.konami-active::before {
+  content: " Bienvenue sur La Plateforme_ ";
+  display: block;
+  text-align: center;
+  font-size: 2em;
+  margin-top: 50px;
+}
