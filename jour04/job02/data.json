@@ -1,0 +1,15 @@
+[{
+  "name": "La Plateforme_",
+  "address": "8 rue d'hozier",
+  "city": "Marseille",
+  "nb_staff": "11",
+  "creation": "2019"
+}
+, {
+  "name": "La Plateforme_",
+  "address": "8 terrasse Bellini",
+  "city": "Puteaux",
+  "nb_staff": "23",
+  "creation": "2025"
+}
+]
