@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Filtrer Pokémon</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js" defer></script>
+  </head>
+  <body>
+    <main>
+      <h1>Filtrer la liste de Pokémon</h1>
+
+      <form id="filterForm">
+        <label>
+          id:
+          <input type="text" id="idInput" name="id" placeholder="ex: 25" />
+        </label>
+
+        <label>
+          nom:
+          <input
+            type="text"
+            id="nameInput"
+            name="name"
+            placeholder="ex: Pikachu"
+          />
+        </label>
+
+        <label>
+          type:
+          <select id="typeSelect" name="type">
+            <option value="">-- Tous --</option>
+          </select>
+        </label>
+
+        <input type="button" id="filterButton" value="Filtrer" />
+      </form>
+
+      <section id="results">
+        <!-- résultats affichés ici -->
+      </section>
+    </main>
+  </body>
+</html>
