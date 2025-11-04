@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Inscription</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="inscription.js" defer></script>
+  </head>
+  <body>
+    <h2>Inscription</h2>
+    <form id="formInscription" novalidate>
+      <label>Nom : <input autocomplete="off" type="text" id="nom" /></label>
+      <div class="error" id="error-nom"></div>
+
+      <label
+        >Prénom : <input autocomplete="off" type="text" id="prenom"
+      /></label>
+      <div class="error" id="error-prenom"></div>
+
+      <label
+        >Email : <input autocomplete="off" type="email" id="email"
+      /></label>
+      <div class="error" id="error-email"></div>
+
+      <label
+        >Mot de passe : <br />
+
+        <input autocomplete="off" type="password" id="password"
+      /></label>
+      <div class="error" id="error-password"></div>
+
+      <label
+        >Confirmer mot de passe :
+        <input autocomplete="off" type="password" id="confirm"
+      /></label>
+      <div class="error" id="error-confirm"></div>
+
+      <button type="submit">S'inscrire</button>
+    </form>
+  </body>
+</html>

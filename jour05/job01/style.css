@@ -1,0 +1,71 @@
+/* Style général */
+body {
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to right, #f0f4f8, #d9e2ec);
+  padding: 40px;
+  color: #333;
+}
+
+/* Titre */
+h2 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #2c3e50;
+}
+
+/* Formulaire */
+form {
+  max-width: 500px;
+  margin: auto;
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Labels et champs */
+label {
+  display: block;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 5px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+input:focus {
+  border-color: #3498db;
+  outline: none;
+}
+
+/* Erreurs */
+.error {
+  color: #e74c3c;
+  font-size: 0.85em;
+  margin-top: -10px;
+  margin-bottom: 10px;
+}
+
+/* Bouton */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
