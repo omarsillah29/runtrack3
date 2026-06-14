@@ -1,86 +1,106 @@
-const board = document.getElementById('board');
-const shuffleBtn = document.getElementById('shuffle');
-const checkBtn = document.getElementById('check');
-const msg = document.getElementById('msg');
+$(function () {
+  const total = 6;
+  const $board = $('#board');
+  const $shuffleBtn = $('#shuffle');
+  const $checkBtn = $('#check');
+  const $msg = $('#msg');
 
-// prepare initial ordered array 1..6
-const total = 6;
-let items = [];
+  function createSlots() {
+    $board.empty();
 
-function createSlots() {
-  board.innerHTML = '';
-  for (let i = 1; i <= total; i++) {
-    const slot = document.createElement('div');
-    slot.className = 'slot';
-    slot.dataset.pos = i;
-    slot.addEventListener('dragover', e => e.preventDefault());
-    slot.addEventListener('drop', onDrop);
-    board.appendChild(slot);
+    for (let i = 1; i <= total; i++) {
+      $('<div>', {
+        class: 'slot',
+        'data-pos': i,
+      })
+        .on('dragover', function (event) {
+          event.preventDefault();
+        })
+        .on('drop', onDrop)
+        .appendTo($board);
+    }
   }
-}
 
-function loadImages(order) {
-  const slots = board.querySelectorAll('.slot');
-  order.forEach((num, idx) => {
-    const img = document.createElement('img');
-    img.src = `images/arc${num}.png`;
-    img.draggable = true;
-    img.dataset.num = num;
-    img.addEventListener('dragstart', e => {
-      e.dataTransfer.setData('text/plain', e.target.dataset.num);
+  function loadImages(order) {
+    const $slots = $board.find('.slot');
+
+    order.forEach(function (num, idx) {
+      const $img = $('<img>', {
+        src: 'images/arc' + num + '.png',
+        draggable: true,
+        'data-num': num,
+        alt: 'arc' + num + '.png',
+      })
+        .on('dragstart', function (event) {
+          event.originalEvent.dataTransfer.setData('text/plain', $(this).data('num')); 
+        })
+        .on('error', function () {
+          $(this).css({ width: '80px', height: 'auto' });
+        });
+
+      $slots.eq(idx).empty().append($img);
     });
-    // graceful fallback if image missing
-    img.onerror = () => { img.alt = `arc${num}.png`; img.style.width='80px'; img.style.height='auto'; };
-    slots[idx].innerHTML = '';
-    slots[idx].appendChild(img);
-  });
-}
-
-function onDrop(e) {
-  e.preventDefault();
-  const fromNum = e.dataTransfer.getData('text/plain');
-  if (!fromNum) return;
-  const targetSlot = e.currentTarget;
-  const fromSlot = [...board.children].find(s => s.querySelector(`img[data-num="${fromNum}"]`));
-  if (!fromSlot) return;
-  // swap nodes
-  const targetImg = targetSlot.querySelector('img');
-  const fromImg = fromSlot.querySelector('img');
-  targetSlot.innerHTML = '';
-  fromSlot.innerHTML = '';
-  if (fromImg) targetSlot.appendChild(fromImg);
-  if (targetImg) fromSlot.appendChild(targetImg);
-}
-
-function shuffledArray() {
-  const a = Array.from({length: total}, (_,i) => i+1);
-  for (let i = a.length -1; i>0; i--) {
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i], a[j]] = [a[j], a[i]];
   }
-  return a;
-}
 
-shuffleBtn.addEventListener('click', () => {
-  const order = shuffledArray();
-  loadImages(order);
-  msg.textContent = '';
-});
+  function onDrop(event) {
+    event.preventDefault();
 
-checkBtn.addEventListener('click', () => {
-  const nums = [...board.children].map(s => {
-    const img = s.querySelector('img');
-    return img ? Number(img.dataset.num) : null;
-  });
-  if (nums.every((n,i) => n === i+1)) {
-    msg.textContent = 'Vous avez gagné';
-    msg.style.color = 'green';
-  } else {
-    msg.textContent = 'Vous avez perdu';
-    msg.style.color = 'red';
+    const fromNum = event.originalEvent.dataTransfer.getData('text/plain');
+    if (!fromNum) {
+      return;
+    }
+
+    const $targetSlot = $(this);
+    const $fromSlot = $board.children().filter(function () {
+      return $(this).find('img[data-num="' + fromNum + '"]').length > 0;
+    });
+
+    if (!$fromSlot.length) {
+      return;
+    }
+
+    const $targetImg = $targetSlot.find('img').detach();
+    const $fromImg = $fromSlot.find('img').detach();
+
+    $targetSlot.empty().append($fromImg);
+    $fromSlot.empty().append($targetImg);
   }
-});
 
-// init
-createSlots();
-loadImages(Array.from({length: total}, (_,i)=>i+1));
+  function shuffledArray() {
+    const array = Array.from({ length: total }, function (_, index) {
+      return index + 1;
+    });
+
+    for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+
+    return array;
+  }
+
+  $shuffleBtn.on('click', function () {
+    loadImages(shuffledArray());
+    $msg.text('').css('color', '');
+  });
+
+  $checkBtn.on('click', function () {
+    const nums = $board.children().map(function () {
+      const $img = $(this).find('img');
+      return $img.length ? Number($img.data('num')) : null;
+    }).get();
+
+    if (nums.every(function (num, index) {
+      return num === index + 1;
+    })) {
+      $msg.text('Vous avez gagné').css('color', 'green');
+    } else {
+      $msg.text('Vous avez perdu').css('color', 'red');
+    }
+  });
+
+  createSlots();
+  loadImages(Array.from({ length: total }, function (_, index) {
+    return index + 1;
+  }));
+});

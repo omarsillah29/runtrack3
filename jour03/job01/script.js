@@ -1,10 +1,12 @@
-const showBtn = document.getElementById('showBtn');
-const hideBtn = document.getElementById('hideBtn');
-const quote = document.getElementById('quote');
+$(function () {
+	const $showBtn = $('#showBtn');
+	const $hideBtn = $('#hideBtn');
+	const $quote = $('#quote');
 
-showBtn.addEventListener('click', () => { quote.style.display = 'block'; });
-hideBtn.addEventListener('click', () => { quote.style.display = 'none'; });
+	$showBtn.on('click', function () { $quote.show(); });
+	$hideBtn.on('click', function () { $quote.hide(); });
 
-// keyboard accessibility: toggle with Enter on focused buttons
-showBtn.addEventListener('keyup', e => { if (e.key === 'Enter') quote.style.display = 'block'; });
-hideBtn.addEventListener('keyup', e => { if (e.key === 'Enter') quote.style.display = 'none'; });
+	// keyboard accessibility: toggle with Enter on focused buttons
+	$showBtn.on('keyup', function (e) { if (e.key === 'Enter') $quote.show(); });
+	$hideBtn.on('keyup', function (e) { if (e.key === 'Enter') $quote.hide(); });
+});
